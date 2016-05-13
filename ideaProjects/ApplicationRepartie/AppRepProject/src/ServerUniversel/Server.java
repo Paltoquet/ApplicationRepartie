@@ -1,4 +1,5 @@
-package Server;
+package ServerUniversel;
+
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -23,8 +24,8 @@ public class Server {
         */
         System.out.println("erver starting");
         try {
-            Registry registry = LocateRegistry.createRegistry(4000);
-            MyRegistry r=new MyRegistry();
+            Registry registry = LocateRegistry.getRegistry("10.212.104.230",4000);
+            MyRegistry r =new MyRegistry();
             // Bind the remote object's stub in the registry
             registry.bind("Registry", r);
             System.err.println("Server ready");
