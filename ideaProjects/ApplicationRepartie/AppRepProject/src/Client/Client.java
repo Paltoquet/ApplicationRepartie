@@ -1,6 +1,6 @@
 package Client;
 
-import Server.MyRegistryInterface;
+import ServerUniversel.MyRegistryInterface;
 
 import java.io.Serializable;
 import java.rmi.NotBoundException;
@@ -15,7 +15,7 @@ public class Client {
 
     public static void main(String[] args) {
         try {
-            Registry registry = LocateRegistry.getRegistry("10.212.104.230",4000);
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1",4000);
             MyRegistryInterface reg= (MyRegistryInterface) registry.lookup("Registry");
             //ServiceInterface musique= (ServiceInterface) reg.lookup("Musique");
             Musique halo=new Musique("Second Prelude",108,"Paul Lupson");

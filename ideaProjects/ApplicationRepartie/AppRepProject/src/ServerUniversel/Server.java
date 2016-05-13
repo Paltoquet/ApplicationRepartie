@@ -24,7 +24,7 @@ public class Server {
         */
         System.out.println("erver starting");
         try {
-            Registry registry = LocateRegistry.getRegistry("10.212.104.230",4000);
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1",4000);
             MyRegistry r =new MyRegistry();
             // Bind the remote object's stub in the registry
             registry.bind("Registry", r);
