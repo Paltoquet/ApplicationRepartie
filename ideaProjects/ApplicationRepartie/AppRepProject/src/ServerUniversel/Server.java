@@ -16,6 +16,7 @@ public class Server {
              -Djava.rmi.server.useCodebaseOnly=false
              -Djava.security.policy="emplacement du fichier de policy
              -Djava.naming.provider.url=rmi://127.0.0.1:4000
+             -Djava.naming.factory.initial=com.sun.jndi.rmi.registry.RegistryContextFactory
 
 
           lancement du rmi registry:
@@ -26,6 +27,8 @@ public class Server {
         try {
             Registry registry = LocateRegistry.getRegistry("127.0.0.1",4000);
             MyRegistry r =new MyRegistry();
+            ThreadProducer t=new ThreadProducer("user","tcp://localhost:61616","chat");
+            t.start();
             // Bind the remote object's stub in the registry
             registry.bind("Registry", r);
             System.err.println("Server ready");

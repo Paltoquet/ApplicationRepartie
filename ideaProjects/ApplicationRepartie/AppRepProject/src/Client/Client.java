@@ -14,6 +14,8 @@ import java.rmi.registry.Registry;
 public class Client {
 
     public static void main(String[] args) {
+        ThreadConsume t=new ThreadConsume("user","tcp://localhost:61616","chat");
+        t.start();
         try {
             Registry registry = LocateRegistry.getRegistry("127.0.0.1",4000);
             MyRegistryInterface reg= (MyRegistryInterface) registry.lookup("Registry");
