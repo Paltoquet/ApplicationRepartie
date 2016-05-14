@@ -27,4 +27,9 @@ public class MyRegistry extends UnicastRemoteObject implements MyRegistryInterfa
         System.out.println("accès sur la clé "+key);
         return map.get(key);
     }
+
+    @Override
+    public String getUrl() {
+        return "tcp://localhost:61616";
+    }
 }

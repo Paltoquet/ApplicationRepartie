@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
  */
 public interface ServiceInterface extends Remote {
 
-    void ajouterMusique(String genre, Musique m) throws RemoteException;;
-    Musique recupererMusique(String genre)throws RemoteException;;
+    void ajouterMusique(String genre, Musique m) throws RemoteException;
+    Musique recupererMusique(String genre)throws RemoteException;
+    String getUrl();
 }

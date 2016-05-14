@@ -11,4 +11,5 @@ public interface MyRegistryInterface extends Remote {
 
     void bind(String key,Serializable obj) throws RemoteException;
     Serializable lookup(String key) throws RemoteException;
+    String getUrl();
 }

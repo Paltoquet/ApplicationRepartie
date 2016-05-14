@@ -12,6 +12,8 @@ import java.util.Scanner;
  */
 public class ThreadConsume extends Thread{
 
+
+
     ConnectionFactory f;
     Connection c;
     Session session;
