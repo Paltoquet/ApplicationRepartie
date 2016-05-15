@@ -100,8 +100,8 @@ public class ClassFileServer extends ClassServer {
    * </code>
    */
   public static void main(String args[]) {
-    int port = 0;
-    String classpath = null;
+    int port = 4001;
+    String classpath = "classes/";
     if (args.length >= 1) {
       port = Integer.parseInt(args[0]);
     }

@@ -19,13 +19,13 @@ public class ThreadProducer extends Thread{
     MessageProducer producer;
 
     public ThreadProducer(String name,String url,String topic){
-        ConnectionFactory f=new ActiveMQConnectionFactory(name,name,url);
+        ConnectionFactory f = new ActiveMQConnectionFactory(name,name,url);
         try {
             c = f.createConnection("user", "user");
             c.start();
             session = c.createSession(false, Session.AUTO_ACKNOWLEDGE);
             q = session.createQueue(topic);
-            producer=session.createProducer(q);
+            producer = session.createProducer(q);
         } catch (JMSException e) {
             e.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class ThreadProducer extends Thread{
             System.out.println("Entrer des messages pour la queue");
             String message="";
             Scanner sc = new Scanner(System.in);
-            while(!(message=sc.nextLine()).equals("quit")) {
+            while(!(message = sc.nextLine()).equals("quit")) {
                 System.out.println();
                 TextMessage m = session.createTextMessage();
                 m.setText(message);

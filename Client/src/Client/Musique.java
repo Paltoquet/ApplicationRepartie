@@ -17,6 +17,11 @@ public class Musique implements Serializable {
         this.auteur = auteur;
     }
 
+    @Override
+    public String toString() {
+        return "Je suis une musique";
+    }
+
     public String getName() {
         return name;
     }
