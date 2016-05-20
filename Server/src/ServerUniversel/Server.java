@@ -12,12 +12,15 @@ import java.rmi.registry.Registry;
 public class Server {
 
     public static void main(String args[]) {
+
         /*
         * Options de VM :
-        *   -Djava.rmi.server.useCodebaseOnly=false
-        *   -Djava.security.policy="emplacement du fichier de policy
-        *   -Djava.naming.provider.url=rmi://127.0.0.1:4000
-        *   -Djava.naming.factory.initial=com.sun.jndi.rmi.registry.RegistryContextFactory
+          -Djava.rmi.server.useCodebaseOnly=false
+          -Djava.security.policy="emplacement du fichier de policy
+          -Djava.naming.provider.url=rmi://127.0.0.1:4000
+          -Djava.naming.factory.initial=com.sun.jndi.rmi.registry.RegistryContextFactory
+          -DContext.INITIAL_CONTEXT_FACTORY="org.apache.activemq.jndi.ActiveMQInitialContextFactory"
+          -DContext.PROVIDER_URL="tcp://localhost:61616"
         *
         * Lancement du rmi registry :
         *   start rmiregistry -J-Djava.rmi.server.useCodebaseOnly=false 4000
