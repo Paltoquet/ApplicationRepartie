@@ -30,8 +30,8 @@ public class Server {
 
         System.out.println("Server starting");
 
-        if (System.getSecurityManager() == null)
-            System.setSecurityManager(new SecurityManager());
+//        if (System.getSecurityManager() == null)
+//            System.setSecurityManager(new SecurityManager());
 
         try {
             Registry registry = LocateRegistry.getRegistry("localhost",4000);
