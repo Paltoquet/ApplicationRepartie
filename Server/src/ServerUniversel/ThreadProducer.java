@@ -35,8 +35,8 @@ public class ThreadProducer extends Thread{
     @Override
     public void run() {
         try {
-            System.out.println("Entrer des messages pour la queue");
-            String message="";
+            System.out.println("Entrez des messages pour la queue...(Tapez 'quit' pour terminer)");
+            String message = "";
             Scanner sc = new Scanner(System.in);
             while(!(message = sc.nextLine()).equals("quit")) {
                 System.out.println();
