@@ -1,6 +1,6 @@
 package ServerUniversel;
 
-import java.io.Serializable;
+import java.io.*;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -37,5 +37,38 @@ public class MyRegistry extends UnicastRemoteObject implements MyRegistryInterfa
     @Override
     public String getUrl() throws RemoteException {
         return "tcp://localhost:61616";
+    }
+    @Override
+    public byte[] download(String fil) {
+        File file=new File(fil);
+        byte buffer[]=new byte[(int)file.length()];
+        System.out.println("telechargement de "+fil+" taille: "+ (int)file.length());
+        BufferedInputStream input= null;
+        try {
+            input = new BufferedInputStream(new FileInputStream(fil));
+            input.read(buffer,0,buffer.length);
+            input.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return buffer;
+    }
+
+    @Override
+    public void upload(byte[] buff,String name) {
+        BufferedOutputStream output= null;
+        try {
+            output = new BufferedOutputStream(new FileOutputStream(name));
+            output.write(buff,0,buff.length);
+            output.flush();
+            output.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
