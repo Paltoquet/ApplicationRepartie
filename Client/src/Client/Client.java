@@ -1,12 +1,15 @@
 package Client;
 
 import ServerUniversel.MyRegistryInterface;
+import ServerUniversel.Telechargement;
 
 import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -22,8 +25,10 @@ public class Client {
         *  -Djava.security.policy=java.policy -Djava.rmi.server.codebase=http://BXXX:4001/
         */
 
-        ThreadConsume t = new ThreadConsume("user", "tcp://localhost:61616", "chat");
+        ThreadConsume t = new ThreadConsume("user", "tcp://localhost:61616", "serveur->client");
         t.start();
+        ThreadProducer l= new ThreadProducer("user", "tcp://localhost:61616", "client->serveur");
+        l.start();
 
         try {
             Registry registry = LocateRegistry.getRegistry("localhost", 4000);
@@ -66,16 +71,41 @@ public class Client {
                 System.out.print(s);
             }
             System.out.println();
-
-            System.out.println("Telechargement de Halo.mp3...");
-            byte[] data=reg.download("src/File/halo.mp3");
-            BufferedOutputStream output=new BufferedOutputStream(new FileOutputStream("src/Client/File/halo.mp3"));
-            output.write(data,0,data.length);
-            output.flush();
-            output.close();
-            System.out.println("Fin du telechargement de Halo.mp3 (taille: "+ data.length + " octets)");
+            download("telechargement_serveur","Server/src/File/halo.mp3","Client/src/Client/File/halo.mp3",reg);
         } catch (NotBoundException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     *
+     * @param serveur_dest
+     * la clé ou récuperer l'interface de "telechargement" sur notre registre universel
+     * @param file
+     * le fichier source sur le serveur
+     * @param file_dest
+     * l'emplacement ou la sauvegarde sera faite
+     * @param reg
+     * le registre universel ou recuperer la bon objet remote
+     */
+    public static void download(String serveur_dest,String file,String file_dest,MyRegistryInterface reg){
+        System.out.println("Telechargement de "+ file +"...");
+        byte[] data= new byte[0];
+        try {
+            data = ((Telechargement)reg.lookup("telechargement_serveur")).download(file);
+            BufferedOutputStream output=new BufferedOutputStream(new FileOutputStream(file_dest));
+            output.write(data,0,data.length);
+            output.flush();
+            output.close();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Fin du telechargement de "+file+" (taille: "+ data.length + " octets)");
     }
 }

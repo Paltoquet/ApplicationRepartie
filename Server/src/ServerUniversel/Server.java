@@ -1,6 +1,7 @@
 package ServerUniversel;
 
 
+import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -38,13 +39,19 @@ public class Server {
         try {
             Registry registry = LocateRegistry.getRegistry("localhost",4000);
             MyRegistry r = new MyRegistry();
-            ThreadProducer t = new ThreadProducer("user", "tcp://localhost:61616", "chat");
+            ThreadProducer t = new ThreadProducer("user", "tcp://localhost:61616", "serveur->client");
             t.start();
+            ThreadConsume l = new ThreadConsume("user", "tcp://localhost:61616", "client->serveur");
+            l.start();
+            TelechargementImpl p=new TelechargementImpl();
+            r.bind("telechargement_serveur",p);
             // Bind the remote object's stub in the registry
             registry.rebind("Registry", r);
             System.err.println("Serveur pret.");
 
         } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (AlreadyBoundException e) {
             e.printStackTrace();
         }
     }
